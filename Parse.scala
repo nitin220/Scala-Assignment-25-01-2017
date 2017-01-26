@@ -21,17 +21,21 @@ object URL
 	def unapply(url:String):Option[(String,String,String,Map[String,String])]=
 	{
 		val protocolAndRest = url.split("://")
-		val protocol = protocolAndRest(0)
-		val domainPathParams = protocolAndRest(1).split("\\?")
-		val params = domainPathParams(1)
-		val domainPath = domainPathParams(0)split(".com")
-		val domain = domainPath(0)+".com"
-		val path = domainPath(1)
-		val toBeMapParams = params.split("&")
-		val toBeMapParamsList=toBeMapParams.toList.map(element=>element.split("="))
-		val toBeMapParamsListOfString=toBeMapParamsList.map(element=>(element(0),element(1)))
-		val paramsMap=toBeMapParamsListOfString.toMap
-		Some(protocol,domain,path,paramsMap)
+		if(protocolAndRest.length==2)
+		{
+			val protocol = protocolAndRest(0)
+			val domainPathParams = protocolAndRest(1).split("\\?")
+			val params = domainPathParams(1)
+			val domainPath = domainPathParams(0)split(".com")
+			val domain = domainPath(0)+".com"
+			val path = domainPath(1)
+			val toBeMapParams = params.split("&")
+			val toBeMapParamsList=toBeMapParams.toList.map(element=>element.split("="))
+			val toBeMapParamsListOfString=toBeMapParamsList.map(element=>(element(0),element(1)))
+			val paramsMap=toBeMapParamsListOfString.toMap
+			Some(protocol,domain,path,paramsMap)
+		}
+		else None
 		
 	}
 	
@@ -45,6 +49,7 @@ object Parse extends App
 		case URL(protocol,domain,path,parama)=>
 			println("Protocol = "+protocol+"\nDomain = "+domain+"\nPath = "+path+"\nParams = "+parama)
 		
+		case _=> println("INVALID URL")
 	}
 
 }
