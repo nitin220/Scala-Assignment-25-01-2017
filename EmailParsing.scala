@@ -8,8 +8,8 @@ object EmailParsing
 		val EMAIL = """([a-zA-Z0-9_.]+)@([a-zA-Z0-9.]+)""".r
   		val EMAIL(user_1, domain_1) = "nitin.aggarwal@knoldus.in"
 		val EMAIL(user_2, domain_2) = "vandana.yadav@knoldus.in"
-      		println("User = "+user_1+"\n"+"Domain = "+domain_1)
-		println("User = "+user_2+"\n"+"Domain = "+domain_2)
+      		println(s"User = $user_1   Domain = $domain_1")
+		println(s"User = $user_2   Domain = $domain_2")
 
 	}
 }
