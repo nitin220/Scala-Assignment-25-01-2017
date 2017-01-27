@@ -25,15 +25,23 @@ object URL
 		{
 			val protocol = protocolAndRest(0)
 			val domainPathParams = protocolAndRest(1).split("\\?")
-			val params = domainPathParams(1)
-			val domainPath = domainPathParams(0)split(".com")
-			val domain = domainPath(0)+".com"
-			val path = domainPath(1)
-			val toBeMapParams = params.split("&")
-			val toBeMapParamsList=toBeMapParams.toList.map(element=>element.split("="))
-			val toBeMapParamsListOfString=toBeMapParamsList.map(element=>(element(0),element(1)))
-			val paramsMap=toBeMapParamsListOfString.toMap
-			Some(protocol,domain,path,paramsMap)
+			if(domainPathParams.length==2)
+			{
+				val params = domainPathParams(1)
+				val domainPath = domainPathParams(0)split(".com")
+				if(domainPath.length==2)
+				{
+					val domain = domainPath(0)+".com"
+					val path = domainPath(1)
+					val toBeMapParams = params.split("&")
+					val toBeMapParamsList=toBeMapParams.toList.map(element=>element.split("="))
+					val toBeMapParamsListOfString=toBeMapParamsList.map(element=>(element(0),element(1)))
+					val paramsMap=toBeMapParamsListOfString.toMap
+					Some(protocol,domain,path,paramsMap)
+				}
+				else None
+			}
+			else None
 		}
 		else None
 		
@@ -43,7 +51,7 @@ object URL
 
 object Parse extends App
 {
-	val url=URL("https","aws.amazon.com","/console/home",Map("state"->"hash","isauthcode"->"true","code"->"112"))
+	val url="https://aws.amazon.com/console/home?state=hash&isauthcode=true&code=112"
 	url match 
 	{
 		case URL(protocol,domain,path,parama)=>
